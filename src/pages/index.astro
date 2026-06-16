@@ -1,0 +1,180 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="YouTube Money Calculator - Estimate Ad Revenue by Views and Niche"
+  description="Free YouTube revenue calculator."
+>
+  <style>
+    input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 9999px; background: linear-gradient(to right, #fecaca, #dc2626); }
+    input[type="range"]::-moz-range-track { height: 8px; border-radius: 9999px; background: linear-gradient(to right, #fecaca, #dc2626); }
+    .revenue-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .revenue-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(220, 38, 38, 0.15); }
+  </style>
+
+  <section class="mb-8">
+    <p class="text-gray-600 leading-relaxed">
+      <strong>How much money can you make on YouTube?</strong> Use our free <strong>YouTube Money Calculator</strong> to estimate your
+      ad revenue based on <strong>daily views</strong> and your channel niche RPM.
+      Finance channels earn up to <strong>$12 RPM</strong> while gaming channels average <strong>$2 RPM</strong>.
+    </p>
+  </section>
+
+  <section id="calculator">
+    <div class="text-center mb-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Revenue Estimator</h2>
+      <p class="text-gray-500 text-sm">Adjust views and select your niche.</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
+      <label for="niche" class="block text-sm font-semibold text-gray-700 mb-2">Channel Niche</label>
+      <select id="niche" class="w-full px-3 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none bg-white">
+        <option value="12">Finance and Investing (RPM $12)</option>
+        <option value="10">Business and Marketing (RPM $10)</option>
+        <option value="8">Education and How-To (RPM $8)</option>
+        <option value="7">Health and Fitness (RPM $7)</option>
+        <option value="7" selected>Tech and Gadgets (RPM $7)</option>
+        <option value="5">Lifestyle and Vlog (RPM $5)</option>
+        <option value="4">Cooking and Food (RPM $4)</option>
+        <option value="3">Music (RPM $3)</option>
+        <option value="2">Gaming (RPM $2)</option>
+        <option value="2">Comedy and Entertainment (RPM $2)</option>
+      </select>
+      <p class="text-xs text-gray-400 mt-2" id="rpmDisplay">RPM: $7 / 1,000 views</p>
+    </div>
+
+    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
+      <label for="views" class="block text-sm font-semibold text-gray-700 mb-2">Daily Views</label>
+      <input type="range" id="views" min="100" max="1000000" step="100" value="10000" class="w-full h-2 rounded-lg appearance-none cursor-pointer mt-2 accent-red-600" />
+      <div class="flex justify-between mt-2">
+        <span class="text-xs text-gray-400">100</span>
+        <span class="text-lg font-bold text-red-600" id="viewsDisplay">10,000 views/day</span>
+        <span class="text-xs text-gray-400">1M</span>
+      </div>
+    </div>
+
+    <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
+      <label for="customViews" class="block text-sm font-semibold text-gray-700 mb-2">Or enter exact views</label>
+      <input type="number" id="customViews" min="1" placeholder="e.g. 50000" class="w-full px-3 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none" />
+    </div>
+
+    <div id="results">
+      <div class="grid sm:grid-cols-3 gap-4 mb-6">
+        <div class="revenue-card bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-5 text-white text-center">
+          <p class="text-sm opacity-80 mb-1">Daily</p><p class="text-3xl font-bold" id="dailyRevenue">$70</p>
+        </div>
+        <div class="revenue-card bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-5 text-white text-center">
+          <p class="text-sm opacity-80 mb-1">Monthly</p><p class="text-3xl font-bold" id="monthlyRevenue">$2,100</p>
+        </div>
+        <div class="revenue-card bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-5 text-white text-center">
+          <p class="text-sm opacity-80 mb-1">Yearly</p><p class="text-3xl font-bold" id="yearlyRevenue">$25,550</p>
+        </div>
+      </div>
+
+      <div class="bg-yellow-50 rounded-lg p-4 border border-yellow-200 mb-6">
+        <p class="text-sm font-semibold text-yellow-800 mb-2">Revenue Range (Low - High)</p>
+        <div class="grid grid-cols-3 gap-3 text-center text-sm">
+          <div><p class="text-xs text-gray-500">Daily</p><p class="font-bold text-yellow-700" id="dailyRange">$35 - $140</p></div>
+          <div><p class="text-xs text-gray-500">Monthly</p><p class="font-bold text-yellow-700" id="monthlyRange">$1,050 - $4,200</p></div>
+          <div><p class="text-xs text-gray-500">Yearly</p><p class="font-bold text-yellow-700" id="yearlyRange">$12.7K - $51.1K</p></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 text-center text-sm">
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">RPM</p><p class="font-bold text-gray-800" id="statRpm">$7</p></div>
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">Daily Views</p><p class="font-bold text-gray-800" id="statViews">10K</p></div>
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">Monthly Views</p><p class="font-bold text-gray-800" id="statMonthlyViews">300K</p></div>
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">CPM Est</p><p class="font-bold text-red-600" id="statCpm">$11</p></div>
+      </div>
+    </div>
+
+    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
+      <p class="font-semibold mb-1">Disclaimer</p>
+      <p class="text-xs">Estimates only. Actual earnings vary.</p>
+    </div>
+  </section>
+
+  <section class="mt-10 mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">How YouTube Ad Revenue Works</h2>
+    <p class="text-gray-600 text-sm leading-relaxed mb-4">YouTube keeps 45%, creators get <strong>55%</strong>. Earnings measured by <strong>RPM</strong> per 1,000 views.</p>
+    <p class="text-gray-600 text-sm leading-relaxed"><strong>Finance channels</strong>: $8-$15 RPM. <strong>Gaming</strong>: $2-$4 RPM.</p>
+  </section>
+
+  <section class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Average RPM by Niche</h2>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-left border border-gray-200 rounded-lg overflow-hidden">
+        <thead class="bg-red-50 text-red-800"><tr><th class="px-4 py-3">Niche</th><th class="px-4 py-3 text-center">RPM</th><th class="px-4 py-3 text-center">Per 100K</th></tr></thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Finance</td><td class="px-4 py-3 text-center text-green-600">$12</td><td class="px-4 py-3 text-center">$1,200</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Business</td><td class="px-4 py-3 text-center text-green-600">$10</td><td class="px-4 py-3 text-center">$1,000</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Education</td><td class="px-4 py-3 text-center text-green-600">$8</td><td class="px-4 py-3 text-center">$800</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Health</td><td class="px-4 py-3 text-center text-green-600">$7</td><td class="px-4 py-3 text-center">$700</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Tech</td><td class="px-4 py-3 text-center text-green-600">$7</td><td class="px-4 py-3 text-center">$700</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Lifestyle</td><td class="px-4 py-3 text-center text-yellow-600">$5</td><td class="px-4 py-3 text-center">$500</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Cooking</td><td class="px-4 py-3 text-center text-yellow-600">$4</td><td class="px-4 py-3 text-center">$400</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Music</td><td class="px-4 py-3 text-center text-orange-600">$3</td><td class="px-4 py-3 text-center">$300</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Gaming</td><td class="px-4 py-3 text-center text-red-600">$2</td><td class="px-4 py-3 text-center">$200</td></tr>
+          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Comedy</td><td class="px-4 py-3 text-center text-red-600">$2</td><td class="px-4 py-3 text-center">$200</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="faq" class="mb-8">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6">FAQ</h2>
+    <div class="space-y-4">
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">How much per 1,000 views?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p><strong>$2-$12 RPM</strong>. Finance $8-$15, gaming $2-$4.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">RPM vs CPM?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p><strong>CPM</strong> = advertiser cost. <strong>RPM</strong> = creator earnings. RPM ~55-70% of CPM.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">Views for $1K/month?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p>At $5 RPM: <strong>200K views/month</strong>. At $10: 100K/month.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">Do all views count?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p>Only <strong>monetized playbacks</strong>. 60-80% typically.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">Creator share?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p><strong>55%</strong> to creators, 45% to YouTube.</p></div></details>
+    </div>
+  </section>
+
+  <script type="application/ld+json" is:inline>
+  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+    {"@type":"Question","name":"How much per 1000 views?","acceptedAnswer":{"@type":"Answer","text":"$2-$12 RPM depending on niche."}},
+    {"@type":"Question","name":"RPM vs CPM?","acceptedAnswer":{"@type":"Answer","text":"CPM is advertiser cost. RPM is creator earnings per 1000 views."}},
+    {"@type":"Question","name":"Views for $1K/month?","acceptedAnswer":{"@type":"Answer","text":"At $5 RPM: 200K views/month. At $10: 100K/month."}},
+    {"@type":"Question","name":"Do all views count?","acceptedAnswer":{"@type":"Answer","text":"Only monetized playbacks. 60-80% typically."}},
+    {"@type":"Question","name":"Creator share?","acceptedAnswer":{"@type":"Answer","text":"55% to creators, 45% to YouTube."}}
+  ]}
+  </script>
+
+  <script is:inline define:vars={{}}>
+    (function () {
+      var niche = document.getElementById("niche");
+      var slider = document.getElementById("views");
+      var custom = document.getElementById("customViews");
+      var vd = document.getElementById("viewsDisplay");
+      var rd = document.getElementById("rpmDisplay");
+      function fmt(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(n>=1e4?0:1)+"K" : n.toString(); }
+      function money(n) { return "$" + Math.round(n).toLocaleString(); }
+      function calc() {
+        var rpm = parseFloat(niche.value);
+        var views = custom.value ? parseInt(custom.value) : parseInt(slider.value);
+        if (!views || views <= 0) return;
+        vd.textContent = fmt(views) + " views/day";
+        rd.textContent = "RPM: $" + rpm + " / 1,000 views";
+        var daily = (views / 1000) * rpm, monthly = daily * 30, yearly = daily * 365;
+        document.getElementById("dailyRevenue").textContent = money(daily);
+        document.getElementById("monthlyRevenue").textContent = money(monthly);
+        document.getElementById("yearlyRevenue").textContent = money(yearly);
+        var lo = daily * 0.5, hi = daily * 2;
+        document.getElementById("dailyRange").textContent = money(lo) + " - " + money(hi);
+        document.getElementById("monthlyRange").textContent = money(lo*30) + " - " + money(hi*30);
+        document.getElementById("yearlyRange").textContent = money(lo*365) + " - " + money(hi*365);
+        document.getElementById("statRpm").textContent = "$" + rpm;
+        document.getElementById("statViews").textContent = fmt(views);
+        document.getElementById("statMonthlyViews").textContent = fmt(views * 30);
+        document.getElementById("statCpm").textContent = "$" + Math.round(rpm / 0.65);
+      }
+      niche.addEventListener("change", calc);
+      slider.addEventListener("input", function() { custom.value = ""; calc(); });
+      custom.addEventListener("input", calc);
+      calc();
+    })();
+  </script>
+</Layout>

@@ -1,0 +1,98 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title,
+  description = 'YouTube Money Calculator — estimate your YouTube ad revenue based on daily views, niche RPM, and upload frequency.',
+  canonicalUrl,
+} = Astro.props;
+
+const canonical = canonicalUrl || new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" is:inline define:vars={{ canonical, title, description }}>
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "YouTube Money Calculator",
+        "url": canonical,
+        "description": description,
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "browserRequirements": "Requires JavaScript"
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": canonical.replace(/\/[^/]*\/?$/, '') },
+          { "@type": "ListItem", "position": 2, "name": title, "item": canonical }
+        ]
+      }
+    ]
+    </script>
+
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  </head>
+  <body class="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+      <header class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-red-600 mb-2">YouTube Money Calculator</h1>
+        <p class="text-gray-600">Estimate your YouTube ad revenue based on views and niche</p>
+      </header>
+
+      <main>
+        <div class="mb-6 min-h-[90px] flex items-center justify-center bg-white/50 rounded-lg border border-dashed border-gray-300">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+          <slot />
+        </div>
+
+        <div class="mt-6 min-h-[90px] flex items-center justify-center bg-white/50 rounded-lg border border-dashed border-gray-300">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script is:inline>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </main>
+
+      <footer class="text-center mt-8 text-gray-500 text-sm">
+        <p>&copy; 2025 YouTube Money Calculator. Estimates only — actual earnings vary.</p>
+      </footer>
+    </div>
+
+    <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+  </body>
+</html>
