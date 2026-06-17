@@ -1,180 +1,118 @@
 ---
 import Layout from '../layouts/Layout.astro';
 ---
-
-<Layout
-  title="YouTube Money Calculator - Estimate Ad Revenue by Views and Niche"
-  description="Free YouTube revenue calculator."
->
+<Layout title="YouTube Money Calculator - Estimate Ad Revenue by Views and Niche" description="Free YouTube revenue calculator.">
   <style>
     input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 9999px; background: linear-gradient(to right, #fecaca, #dc2626); }
     input[type="range"]::-moz-range-track { height: 8px; border-radius: 9999px; background: linear-gradient(to right, #fecaca, #dc2626); }
-    .revenue-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .revenue-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(220, 38, 38, 0.15); }
   </style>
-
   <section class="mb-8">
-    <p class="text-gray-600 leading-relaxed">
-      <strong>How much money can you make on YouTube?</strong> Use our free <strong>YouTube Money Calculator</strong> to estimate your
-      ad revenue based on <strong>daily views</strong> and your channel niche RPM.
-      Finance channels earn up to <strong>$12 RPM</strong> while gaming channels average <strong>$2 RPM</strong>.
-    </p>
+    <p class="text-gray-600 leading-relaxed" data-i18n="pageDesc"><strong>How much money can you make on YouTube?</strong> Use our free <strong>YouTube Money Calculator</strong> to estimate your ad revenue based on <strong>daily views</strong> and your channel niche RPM.</p>
   </section>
-
   <section id="calculator">
     <div class="text-center mb-6">
-      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Revenue Estimator</h2>
-      <p class="text-gray-500 text-sm">Adjust views and select your niche.</p>
+      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2" data-i18n="estimatorTitle">Revenue Estimator</h2>
+      <p class="text-gray-500 text-sm" data-i18n="estimatorDesc">Adjust views and select your niche.</p>
     </div>
-
     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
-      <label for="niche" class="block text-sm font-semibold text-gray-700 mb-2">Channel Niche</label>
+      <label for="niche" class="block text-sm font-semibold text-gray-700 mb-2" data-i18n="lblNiche">Channel Niche</label>
       <select id="niche" class="w-full px-3 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none bg-white">
-        <option value="12">Finance and Investing (RPM $12)</option>
-        <option value="10">Business and Marketing (RPM $10)</option>
-        <option value="8">Education and How-To (RPM $8)</option>
-        <option value="7">Health and Fitness (RPM $7)</option>
-        <option value="7" selected>Tech and Gadgets (RPM $7)</option>
-        <option value="5">Lifestyle and Vlog (RPM $5)</option>
-        <option value="4">Cooking and Food (RPM $4)</option>
-        <option value="3">Music (RPM $3)</option>
-        <option value="2">Gaming (RPM $2)</option>
-        <option value="2">Comedy and Entertainment (RPM $2)</option>
+        <option value="12" data-i18n="nicheFinance">Finance and Investing (RPM $12)</option>
+        <option value="10" data-i18n="nicheBusiness">Business and Marketing (RPM $10)</option>
+        <option value="8" data-i18n="nicheEducation">Education and How-To (RPM $8)</option>
+        <option value="7" data-i18n="nicheHealth">Health and Fitness (RPM $7)</option>
+        <option value="7" selected data-i18n="nicheTech">Tech and Gadgets (RPM $7)</option>
+        <option value="5" data-i18n="nicheLifestyle">Lifestyle and Vlog (RPM $5)</option>
+        <option value="4" data-i18n="nicheCooking">Cooking and Food (RPM $4)</option>
+        <option value="3" data-i18n="nicheMusic">Music (RPM $3)</option>
+        <option value="2" data-i18n="nicheGaming">Gaming (RPM $2)</option>
+        <option value="2" data-i18n="nicheComedy">Comedy and Entertainment (RPM $2)</option>
       </select>
       <p class="text-xs text-gray-400 mt-2" id="rpmDisplay">RPM: $7 / 1,000 views</p>
     </div>
-
     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
-      <label for="views" class="block text-sm font-semibold text-gray-700 mb-2">Daily Views</label>
+      <label for="views" class="block text-sm font-semibold text-gray-700 mb-2" data-i18n="lblDailyViews">Daily Views</label>
       <input type="range" id="views" min="100" max="1000000" step="100" value="10000" class="w-full h-2 rounded-lg appearance-none cursor-pointer mt-2 accent-red-600" />
-      <div class="flex justify-between mt-2">
-        <span class="text-xs text-gray-400">100</span>
-        <span class="text-lg font-bold text-red-600" id="viewsDisplay">10,000 views/day</span>
-        <span class="text-xs text-gray-400">1M</span>
-      </div>
+      <div class="flex justify-between mt-2"><span class="text-xs text-gray-400">100</span><span class="text-lg font-bold text-red-600" id="viewsDisplay">10,000 views/day</span><span class="text-xs text-gray-400">1M</span></div>
     </div>
-
     <div class="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-6">
-      <label for="customViews" class="block text-sm font-semibold text-gray-700 mb-2">Or enter exact views</label>
-      <input type="number" id="customViews" min="1" placeholder="e.g. 50000" class="w-full px-3 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none" />
+      <label for="customViews" class="block text-sm font-semibold text-gray-700 mb-2" data-i18n="lblCustomViews">Or enter exact views</label>
+      <input type="number" id="customViews" min="1" data-i18n-placeholder="phCustomViews" placeholder="e.g. 50000" class="w-full px-3 py-2.5 text-sm rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:outline-none" />
     </div>
-
     <div id="results">
       <div class="grid sm:grid-cols-3 gap-4 mb-6">
-        <div class="revenue-card bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-5 text-white text-center">
-          <p class="text-sm opacity-80 mb-1">Daily</p><p class="text-3xl font-bold" id="dailyRevenue">$70</p>
-        </div>
-        <div class="revenue-card bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-5 text-white text-center">
-          <p class="text-sm opacity-80 mb-1">Monthly</p><p class="text-3xl font-bold" id="monthlyRevenue">$2,100</p>
-        </div>
-        <div class="revenue-card bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-5 text-white text-center">
-          <p class="text-sm opacity-80 mb-1">Yearly</p><p class="text-3xl font-bold" id="yearlyRevenue">$25,550</p>
-        </div>
+        <div class="bg-gradient-to-br from-red-500 to-red-600 rounded-xl p-5 text-white text-center"><p class="text-sm opacity-80 mb-1" data-i18n="daily">Daily</p><p class="text-3xl font-bold" id="dailyRevenue">$70</p></div>
+        <div class="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-5 text-white text-center"><p class="text-sm opacity-80 mb-1" data-i18n="monthly">Monthly</p><p class="text-3xl font-bold" id="monthlyRevenue">$2,100</p></div>
+        <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl p-5 text-white text-center"><p class="text-sm opacity-80 mb-1" data-i18n="yearly">Yearly</p><p class="text-3xl font-bold" id="yearlyRevenue">$25,550</p></div>
       </div>
-
       <div class="bg-yellow-50 rounded-lg p-4 border border-yellow-200 mb-6">
-        <p class="text-sm font-semibold text-yellow-800 mb-2">Revenue Range (Low - High)</p>
+        <p class="text-sm font-semibold text-yellow-800 mb-2" data-i18n="rangeTitle">Revenue Range (Low - High)</p>
         <div class="grid grid-cols-3 gap-3 text-center text-sm">
-          <div><p class="text-xs text-gray-500">Daily</p><p class="font-bold text-yellow-700" id="dailyRange">$35 - $140</p></div>
-          <div><p class="text-xs text-gray-500">Monthly</p><p class="font-bold text-yellow-700" id="monthlyRange">$1,050 - $4,200</p></div>
-          <div><p class="text-xs text-gray-500">Yearly</p><p class="font-bold text-yellow-700" id="yearlyRange">$12.7K - $51.1K</p></div>
+          <div><p class="text-xs text-gray-500" data-i18n="daily">Daily</p><p class="font-bold text-yellow-700" id="dailyRange">$35 - $140</p></div>
+          <div><p class="text-xs text-gray-500" data-i18n="monthly">Monthly</p><p class="font-bold text-yellow-700" id="monthlyRange">$1,050 - $4,200</p></div>
+          <div><p class="text-xs text-gray-500" data-i18n="yearly">Yearly</p><p class="font-bold text-yellow-700" id="yearlyRange">$12.7K - $51.1K</p></div>
         </div>
       </div>
-
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 text-center text-sm">
         <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">RPM</p><p class="font-bold text-gray-800" id="statRpm">$7</p></div>
-        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">Daily Views</p><p class="font-bold text-gray-800" id="statViews">10K</p></div>
-        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">Monthly Views</p><p class="font-bold text-gray-800" id="statMonthlyViews">300K</p></div>
-        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1">CPM Est</p><p class="font-bold text-red-600" id="statCpm">$11</p></div>
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1" data-i18n="dailyViews">Daily Views</p><p class="font-bold text-gray-800" id="statViews">10K</p></div>
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1" data-i18n="monthlyViews">Monthly Views</p><p class="font-bold text-gray-800" id="statMonthlyViews">300K</p></div>
+        <div class="bg-gray-50 rounded-lg p-3"><p class="text-xs text-gray-500 mb-1" data-i18n="cpmEst">CPM Est</p><p class="font-bold text-red-600" id="statCpm">$11</p></div>
       </div>
     </div>
-
     <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
-      <p class="font-semibold mb-1">Disclaimer</p>
-      <p class="text-xs">Estimates only. Actual earnings vary.</p>
+      <p class="font-semibold mb-1" data-i18n="disclaimer">Disclaimer</p>
+      <p class="text-xs" data-i18n="disclaimerD">Estimates only. Actual earnings vary.</p>
     </div>
   </section>
-
   <section class="mt-10 mb-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">How YouTube Ad Revenue Works</h2>
-    <p class="text-gray-600 text-sm leading-relaxed mb-4">YouTube keeps 45%, creators get <strong>55%</strong>. Earnings measured by <strong>RPM</strong> per 1,000 views.</p>
-    <p class="text-gray-600 text-sm leading-relaxed"><strong>Finance channels</strong>: $8-$15 RPM. <strong>Gaming</strong>: $2-$4 RPM.</p>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4" data-i18n="howWorksTitle">How YouTube Ad Revenue Works</h2>
+    <p class="text-gray-600 text-sm leading-relaxed mb-4" data-i18n="howWorks1">YouTube keeps 45%, creators get <strong>55%</strong>. Earnings measured by <strong>RPM</strong> per 1,000 views.</p>
+    <p class="text-gray-600 text-sm leading-relaxed" data-i18n="howWorks2"><strong>Finance channels</strong>: $8-$15 RPM. <strong>Gaming</strong>: $2-$4 RPM.</p>
   </section>
-
-  <section class="mb-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Average RPM by Niche</h2>
-    <div class="overflow-x-auto">
-      <table class="w-full text-sm text-left border border-gray-200 rounded-lg overflow-hidden">
-        <thead class="bg-red-50 text-red-800"><tr><th class="px-4 py-3">Niche</th><th class="px-4 py-3 text-center">RPM</th><th class="px-4 py-3 text-center">Per 100K</th></tr></thead>
-        <tbody class="divide-y divide-gray-100">
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Finance</td><td class="px-4 py-3 text-center text-green-600">$12</td><td class="px-4 py-3 text-center">$1,200</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Business</td><td class="px-4 py-3 text-center text-green-600">$10</td><td class="px-4 py-3 text-center">$1,000</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Education</td><td class="px-4 py-3 text-center text-green-600">$8</td><td class="px-4 py-3 text-center">$800</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Health</td><td class="px-4 py-3 text-center text-green-600">$7</td><td class="px-4 py-3 text-center">$700</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Tech</td><td class="px-4 py-3 text-center text-green-600">$7</td><td class="px-4 py-3 text-center">$700</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Lifestyle</td><td class="px-4 py-3 text-center text-yellow-600">$5</td><td class="px-4 py-3 text-center">$500</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Cooking</td><td class="px-4 py-3 text-center text-yellow-600">$4</td><td class="px-4 py-3 text-center">$400</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Music</td><td class="px-4 py-3 text-center text-orange-600">$3</td><td class="px-4 py-3 text-center">$300</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Gaming</td><td class="px-4 py-3 text-center text-red-600">$2</td><td class="px-4 py-3 text-center">$200</td></tr>
-          <tr class="hover:bg-gray-50"><td class="px-4 py-3">Comedy</td><td class="px-4 py-3 text-center text-red-600">$2</td><td class="px-4 py-3 text-center">$200</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
   <section id="faq" class="mb-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">FAQ</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-6" data-i18n="faq">FAQ</h2>
     <div class="space-y-4">
-      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">How much per 1,000 views?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p><strong>$2-$12 RPM</strong>. Finance $8-$15, gaming $2-$4.</p></div></details>
-      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">RPM vs CPM?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p><strong>CPM</strong> = advertiser cost. <strong>RPM</strong> = creator earnings. RPM ~55-70% of CPM.</p></div></details>
-      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">Views for $1K/month?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p>At $5 RPM: <strong>200K views/month</strong>. At $10: 100K/month.</p></div></details>
-      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">Do all views count?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p>Only <strong>monetized playbacks</strong>. 60-80% typically.</p></div></details>
-      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm">Creator share?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p><strong>55%</strong> to creators, 45% to YouTube.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm" data-i18n="fq1">How much per 1,000 views?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p data-i18n="fa1"><strong>$2-$12 RPM</strong>. Finance $8-$15, gaming $2-$4.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm" data-i18n="fq2">RPM vs CPM?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p data-i18n="fa2"><strong>CPM</strong> = advertiser cost. <strong>RPM</strong> = creator earnings.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm" data-i18n="fq3">Views for $1K/month?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p data-i18n="fa3">At $5 RPM: <strong>200K views/month</strong>. At $10: 100K/month.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm" data-i18n="fq4">Do all views count?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p data-i18n="fa4">Only <strong>monetized playbacks</strong>. 60-80% typically.</p></div></details>
+      <details class="group bg-gray-50 rounded-lg border border-gray-200 open:bg-white open:shadow-sm"><summary class="cursor-pointer px-4 py-3 font-semibold text-sm" data-i18n="fq5">Creator share?</summary><div class="px-4 pb-4 text-sm text-gray-600"><p data-i18n="fa5"><strong>55%</strong> to creators, 45% to YouTube.</p></div></details>
     </div>
   </section>
-
-  <script type="application/ld+json" is:inline>
-  {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-    {"@type":"Question","name":"How much per 1000 views?","acceptedAnswer":{"@type":"Answer","text":"$2-$12 RPM depending on niche."}},
-    {"@type":"Question","name":"RPM vs CPM?","acceptedAnswer":{"@type":"Answer","text":"CPM is advertiser cost. RPM is creator earnings per 1000 views."}},
-    {"@type":"Question","name":"Views for $1K/month?","acceptedAnswer":{"@type":"Answer","text":"At $5 RPM: 200K views/month. At $10: 100K/month."}},
-    {"@type":"Question","name":"Do all views count?","acceptedAnswer":{"@type":"Answer","text":"Only monetized playbacks. 60-80% typically."}},
-    {"@type":"Question","name":"Creator share?","acceptedAnswer":{"@type":"Answer","text":"55% to creators, 45% to YouTube."}}
-  ]}
-  </script>
-
+  <script type="application/ld+json" is:inline>{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much per 1000 views?","acceptedAnswer":{"@type":"Answer","text":"$2-$12 RPM."}}]}</script>
   <script is:inline define:vars={{}}>
-    (function () {
-      var niche = document.getElementById("niche");
-      var slider = document.getElementById("views");
-      var custom = document.getElementById("customViews");
-      var vd = document.getElementById("viewsDisplay");
-      var rd = document.getElementById("rpmDisplay");
-      function fmt(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e3 ? (n/1e3).toFixed(n>=1e4?0:1)+"K" : n.toString(); }
-      function money(n) { return "$" + Math.round(n).toLocaleString(); }
-      function calc() {
-        var rpm = parseFloat(niche.value);
-        var views = custom.value ? parseInt(custom.value) : parseInt(slider.value);
-        if (!views || views <= 0) return;
-        vd.textContent = fmt(views) + " views/day";
-        rd.textContent = "RPM: $" + rpm + " / 1,000 views";
-        var daily = (views / 1000) * rpm, monthly = daily * 30, yearly = daily * 365;
-        document.getElementById("dailyRevenue").textContent = money(daily);
-        document.getElementById("monthlyRevenue").textContent = money(monthly);
-        document.getElementById("yearlyRevenue").textContent = money(yearly);
-        var lo = daily * 0.5, hi = daily * 2;
-        document.getElementById("dailyRange").textContent = money(lo) + " - " + money(hi);
-        document.getElementById("monthlyRange").textContent = money(lo*30) + " - " + money(hi*30);
-        document.getElementById("yearlyRange").textContent = money(lo*365) + " - " + money(hi*365);
-        document.getElementById("statRpm").textContent = "$" + rpm;
-        document.getElementById("statViews").textContent = fmt(views);
-        document.getElementById("statMonthlyViews").textContent = fmt(views * 30);
-        document.getElementById("statCpm").textContent = "$" + Math.round(rpm / 0.65);
-      }
-      niche.addEventListener("change", calc);
-      slider.addEventListener("input", function() { custom.value = ""; calc(); });
-      custom.addEventListener("input", calc);
-      calc();
-    })();
+    (function(){var niche=document.getElementById("niche"),slider=document.getElementById("views"),custom=document.getElementById("customViews"),vd=document.getElementById("viewsDisplay"),rd=document.getElementById("rpmDisplay");function fmt(n){return n>=1e6?(n/1e6).toFixed(1)+"M":n>=1e3?(n/1e3).toFixed(n>=1e4?0:1)+"K":n.toString();}function money(n){return"$"+Math.round(n).toLocaleString();}function calc(){var t=window._t,rpm=parseFloat(niche.value),views=custom.value?parseInt(custom.value):parseInt(slider.value);if(!views||views<=0)return;vd.textContent=fmt(views)+" "+(t?t("viewsDay"):"views/day");rd.textContent=(t?t("rpmLabel"):"RPM:")+" $"+rpm+" / 1,000 "+(t?t("views"):"views");var daily=(views/1000)*rpm,monthly=daily*30,yearly=daily*365;document.getElementById("dailyRevenue").textContent=money(daily);document.getElementById("monthlyRevenue").textContent=money(monthly);document.getElementById("yearlyRevenue").textContent=money(yearly);var lo=daily*0.5,hi=daily*2;document.getElementById("dailyRange").textContent=money(lo)+" - "+money(hi);document.getElementById("monthlyRange").textContent=money(lo*30)+" - "+money(hi*30);document.getElementById("yearlyRange").textContent=money(lo*365)+" - "+money(hi*365);document.getElementById("statRpm").textContent="$"+rpm;document.getElementById("statViews").textContent=fmt(views);document.getElementById("statMonthlyViews").textContent=fmt(views*30);document.getElementById("statCpm").textContent="$"+Math.round(rpm/0.65);}niche.addEventListener("change",calc);slider.addEventListener("input",function(){custom.value="";calc();});custom.addEventListener("input",calc);window.calculate=calc;calc();})();
+  </script>
+  <script is:inline>
+  (function(){
+  var LANGS={en:'English',es:'Español',de:'Deutsch',fr:'Français',ja:'日本語',zh:'简体中文',pt:'Português',it:'Italiano',ru:'Русский',ko:'한국어',ar:'العربية',hi:'हिन्दी',th:'ไทย',tr:'Türkçe'};
+  var translations={
+en:{pageDesc:'<strong>How much money can you make on YouTube?</strong> Use our free <strong>YouTube Money Calculator</strong> to estimate ad revenue based on <strong>daily views</strong> and niche RPM.',estimatorTitle:'Revenue Estimator',estimatorDesc:'Adjust views and select your niche.',lblNiche:'Channel Niche',lblDailyViews:'Daily Views',lblCustomViews:'Or enter exact views',phCustomViews:'e.g. 50000',daily:'Daily',monthly:'Monthly',yearly:'Yearly',rangeTitle:'Revenue Range (Low - High)',dailyViews:'Daily Views',monthlyViews:'Monthly Views',cpmEst:'CPM Est',disclaimer:'Disclaimer',disclaimerD:'Estimates only. Actual earnings vary.',howWorksTitle:'How YouTube Ad Revenue Works',howWorks1:'YouTube keeps 45%, creators get <strong>55%</strong>. Measured by <strong>RPM</strong> per 1,000 views.',howWorks2:'<strong>Finance</strong>: $8-$15 RPM. <strong>Gaming</strong>: $2-$4 RPM.',nicheFinance:'Finance and Investing (RPM $12)',nicheBusiness:'Business and Marketing (RPM $10)',nicheEducation:'Education and How-To (RPM $8)',nicheHealth:'Health and Fitness (RPM $7)',nicheTech:'Tech and Gadgets (RPM $7)',nicheLifestyle:'Lifestyle and Vlog (RPM $5)',nicheCooking:'Cooking and Food (RPM $4)',nicheMusic:'Music (RPM $3)',nicheGaming:'Gaming (RPM $2)',nicheComedy:'Comedy and Entertainment (RPM $2)',faq:'FAQ',fq1:'How much per 1,000 views?',fa1:'<strong>$2-$12 RPM</strong>. Finance $8-$15, gaming $2-$4.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=advertiser cost. <strong>RPM</strong>=creator earnings.',fq3:'Views for $1K/month?',fa3:'At $5 RPM: <strong>200K views/month</strong>.',fq4:'Do all views count?',fa4:'Only <strong>monetized playbacks</strong>. 60-80% typically.',fq5:'Creator share?',fa5:'<strong>55%</strong> creators, 45% YouTube.',viewsDay:'views/day',rpmLabel:'RPM:',views:'views'},
+es:{pageDesc:'<strong>¿Cuánto ganar en YouTube?</strong> Usa nuestra <strong>Calculadora YouTube</strong> para estimar ingresos según <strong>vistas diarias</strong>.',estimatorTitle:'Estimador de Ingresos',estimatorDesc:'Ajusta vistas y selecciona nicho.',lblNiche:'Nicho del Canal',lblDailyViews:'Vistas Diarias',lblCustomViews:'O ingresa vistas exactas',phCustomViews:'ej. 50000',daily:'Diario',monthly:'Mensual',yearly:'Anual',rangeTitle:'Rango de Ingresos',dailyViews:'Vistas Diarias',monthlyViews:'Vistas Mensuales',cpmEst:'CPM Est.',disclaimer:'Aviso',disclaimerD:'Solo estimaciones.',howWorksTitle:'Cómo Funciona el Ingreso',howWorks1:'YouTube se queda con 45%, creadores reciben <strong>55%</strong>.',howWorks2:'<strong>Finanzas</strong>: $8-$15 RPM. <strong>Gaming</strong>: $2-$4 RPM.',nicheFinance:'Finanzas e Inversión (RPM $12)',nicheBusiness:'Negocios y Marketing (RPM $10)',nicheEducation:'Educación (RPM $8)',nicheHealth:'Salud y Fitness (RPM $7)',nicheTech:'Tecnología (RPM $7)',nicheLifestyle:'Estilo de Vida (RPM $5)',nicheCooking:'Cocina (RPM $4)',nicheMusic:'Música (RPM $3)',nicheGaming:'Gaming (RPM $2)',nicheComedy:'Comedia (RPM $2)',faq:'Preguntas',fq1:'¿Cuánto por 1,000 vistas?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'¿RPM vs CPM?',fa2:'<strong>CPM</strong>=costo anunciante. <strong>RPM</strong>=ingresos.',fq3:'¿Vistas para $1K/mes?',fa3:'A $5 RPM: <strong>200K vistas/mes</strong>.',fq4:'¿Cuentan todas?',fa4:'Solo <strong>reproducciones monetizadas</strong>.',fq5:'¿Parte del creador?',fa5:'<strong>55%</strong> al creador, 45% YouTube.',viewsDay:'vistas/día',rpmLabel:'RPM:',views:'vistas'},
+de:{pageDesc:'<strong>Wie viel verdient man auf YouTube?</strong> Nutze unseren <strong>YouTube-Geldrechner</strong>.',estimatorTitle:'Einnahmenschätzer',estimatorDesc:'Aufrufe anpassen, Nische wählen.',lblNiche:'Kanal-Nische',lblDailyViews:'Tägliche Aufrufe',lblCustomViews:'Oder genaue Aufrufe',phCustomViews:'z.B. 50000',daily:'Täglich',monthly:'Monatlich',yearly:'Jährlich',rangeTitle:'Einnahmenbereich',dailyViews:'Tägliche Aufrufe',monthlyViews:'Monatliche Aufrufe',cpmEst:'CPM Schätzung',disclaimer:'Haftungsausschluss',disclaimerD:'Nur Schätzungen.',howWorksTitle:'Wie Werbeeinnahmen Funktionieren',howWorks1:'YouTube behält 45%, Creator erhalten <strong>55%</strong>.',howWorks2:'<strong>Finanzen</strong>: $8-$15 RPM.',nicheFinance:'Finanzen (RPM $12)',nicheBusiness:'Business (RPM $10)',nicheEducation:'Bildung (RPM $8)',nicheHealth:'Gesundheit (RPM $7)',nicheTech:'Tech (RPM $7)',nicheLifestyle:'Lifestyle (RPM $5)',nicheCooking:'Kochen (RPM $4)',nicheMusic:'Musik (RPM $3)',nicheGaming:'Gaming (RPM $2)',nicheComedy:'Comedy (RPM $2)',faq:'FAQ',fq1:'Wie viel pro 1.000 Aufrufe?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=Werbekosten. <strong>RPM</strong>=Einnahmen.',fq3:'Aufrufe für $1K/Monat?',fa3:'Bei $5 RPM: <strong>200K/Monat</strong>.',fq4:'Zählen alle Aufrufe?',fa4:'Nur <strong>monetarisierte</strong>.',fq5:'Creator-Anteil?',fa5:'<strong>55%</strong> Creator, 45% YouTube.',viewsDay:'Aufrufe/Tag',rpmLabel:'RPM:',views:'Aufrufe'},
+fr:{pageDesc:'<strong>Combien gagner sur YouTube ?</strong> Calculez vos revenus.',estimatorTitle:'Estimateur de Revenus',estimatorDesc:'Ajustez vues, choisissez niche.',lblNiche:'Niche',lblDailyViews:'Vues Quotidiennes',lblCustomViews:'Ou vues exactes',phCustomViews:'ex. 50000',daily:'Quotidien',monthly:'Mensuel',yearly:'Annuel',rangeTitle:'Plage de Revenus',dailyViews:'Vues Quotidiennes',monthlyViews:'Vues Mensuelles',cpmEst:'CPM Est.',disclaimer:'Avertissement',disclaimerD:'Estimations uniquement.',howWorksTitle:'Comment ça Marche',howWorks1:'YouTube garde 45%, créateurs <strong>55%</strong>.',howWorks2:'<strong>Finance</strong>: $8-$15 RPM.',nicheFinance:'Finance (RPM $12)',nicheBusiness:'Business (RPM $10)',nicheEducation:'Éducation (RPM $8)',nicheHealth:'Santé (RPM $7)',nicheTech:'Tech (RPM $7)',nicheLifestyle:'Lifestyle (RPM $5)',nicheCooking:'Cuisine (RPM $4)',nicheMusic:'Musique (RPM $3)',nicheGaming:'Gaming (RPM $2)',nicheComedy:'Comédie (RPM $2)',faq:'FAQ',fq1:'Combien pour 1.000 vues ?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM ?',fa2:'<strong>CPM</strong>=coût annonceur. <strong>RPM</strong>=revenus.',fq3:'Vues pour $1K/mois ?',fa3:'À $5 RPM: <strong>200K/mois</strong>.',fq4:'Toutes comptent ?',fa4:'Seulement <strong>monétisées</strong>.',fq5:'Part créateur ?',fa5:'<strong>55%</strong>, 45% YouTube.',viewsDay:'vues/jour',rpmLabel:'RPM:',views:'vues'},
+ja:{pageDesc:'<strong>YouTubeでいくら稼げる？</strong>無料の<strong>収益計算機</strong>で見積もり。',estimatorTitle:'収益見積もり',estimatorDesc:'視聴数とジャンル選択。',lblNiche:'ジャンル',lblDailyViews:'日次視聴数',lblCustomViews:'または正確な視聴数',phCustomViews:'例: 50000',daily:'日次',monthly:'月次',yearly:'年次',rangeTitle:'収益範囲',dailyViews:'日次視聴数',monthlyViews:'月次視聴数',cpmEst:'CPM推定',disclaimer:'免責事項',disclaimerD:'推定のみ。',howWorksTitle:'広告収益の仕組み',howWorks1:'YouTube45%、クリエイター<strong>55%</strong>。',howWorks2:'<strong>金融</strong>：$8-$15 RPM。',nicheFinance:'金融・投資 (RPM $12)',nicheBusiness:'ビジネス (RPM $10)',nicheEducation:'教育 (RPM $8)',nicheHealth:'健康 (RPM $7)',nicheTech:'テック (RPM $7)',nicheLifestyle:'ライフスタイル (RPM $5)',nicheCooking:'料理 (RPM $4)',nicheMusic:'音楽 (RPM $3)',nicheGaming:'ゲーム (RPM $2)',nicheComedy:'コメディ (RPM $2)',faq:'よくある質問',fq1:'1,000視聴でいくら？',fa1:'<strong>$2-$12 RPM</strong>。',fq2:'RPMとCPM？',fa2:'<strong>CPM</strong>=広告主コスト。<strong>RPM</strong>=収益。',fq3:'$1K/月の視聴数？',fa3:'$5 RPM：<strong>月20万視聴</strong>。',fq4:'全視聴がカウント？',fa4:'<strong>収益化再生</strong>のみ。',fq5:'クリエイター取り分？',fa5:'<strong>55%</strong>、YouTube45%。',viewsDay:'視聴/日',rpmLabel:'RPM:',views:'視聴'},
+zh:{pageDesc:'<strong>YouTube能赚多少钱？</strong>使用免费<strong>YouTube收益计算器</strong>估算广告收入。',estimatorTitle:'收益估算器',estimatorDesc:'调整观看数和领域。',lblNiche:'频道领域',lblDailyViews:'日观看数',lblCustomViews:'或输入精确观看数',phCustomViews:'例如 50000',daily:'每日',monthly:'每月',yearly:'每年',rangeTitle:'收益范围',dailyViews:'日观看数',monthlyViews:'月观看数',cpmEst:'CPM估算',disclaimer:'免责声明',disclaimerD:'仅供估算。',howWorksTitle:'YouTube广告收益原理',howWorks1:'YouTube抽45%，创作者获<strong>55%</strong>。',howWorks2:'<strong>金融</strong>：$8-$15 RPM。',nicheFinance:'金融与投资 (RPM $12)',nicheBusiness:'商业 (RPM $10)',nicheEducation:'教育 (RPM $8)',nicheHealth:'健康 (RPM $7)',nicheTech:'科技 (RPM $7)',nicheLifestyle:'生活 (RPM $5)',nicheCooking:'美食 (RPM $4)',nicheMusic:'音乐 (RPM $3)',nicheGaming:'游戏 (RPM $2)',nicheComedy:'喜剧 (RPM $2)',faq:'常见问题',fq1:'1000观看多少钱？',fa1:'<strong>$2-$12 RPM</strong>。',fq2:'RPM和CPM区别？',fa2:'<strong>CPM</strong>=广告商成本。<strong>RPM</strong>=创作者收益。',fq3:'月入$1K需多少观看？',fa3:'$5 RPM：<strong>月20万观看</strong>。',fq4:'所有观看都算？',fa4:'仅<strong>已变现播放</strong>。',fq5:'创作者分成？',fa5:'<strong>55%</strong>创作者，45% YouTube。',viewsDay:'观看/天',rpmLabel:'RPM:',views:'观看'},
+pt:{pageDesc:'<strong>Quanto ganhar no YouTube?</strong> Calcule receitas grátis.',estimatorTitle:'Estimador de Receita',estimatorDesc:'Ajuste visualizações e nicho.',lblNiche:'Nicho',lblDailyViews:'Visualizações Diárias',lblCustomViews:'Ou visualizações exatas',phCustomViews:'ex. 50000',daily:'Diário',monthly:'Mensal',yearly:'Anual',rangeTitle:'Faixa de Receita',dailyViews:'Visualizações Diárias',monthlyViews:'Visualizações Mensais',cpmEst:'CPM Est.',disclaimer:'Aviso',disclaimerD:'Apenas estimativas.',howWorksTitle:'Como Funciona',howWorks1:'YouTube fica com 45%, criadores <strong>55%</strong>.',howWorks2:'<strong>Finanças</strong>: $8-$15 RPM.',nicheFinance:'Finanças (RPM $12)',nicheBusiness:'Negócios (RPM $10)',nicheEducation:'Educação (RPM $8)',nicheHealth:'Saúde (RPM $7)',nicheTech:'Tech (RPM $7)',nicheLifestyle:'Lifestyle (RPM $5)',nicheCooking:'Culinária (RPM $4)',nicheMusic:'Música (RPM $3)',nicheGaming:'Gaming (RPM $2)',nicheComedy:'Comédia (RPM $2)',faq:'Perguntas',fq1:'Quanto por 1.000 visualizações?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=custo anunciante. <strong>RPM</strong>=ganho criador.',fq3:'Visualizações para $1K/mês?',fa3:'A $5 RPM: <strong>200K/mês</strong>.',fq4:'Todas contam?',fa4:'Só <strong>monetizadas</strong>.',fq5:'Parte criador?',fa5:'<strong>55%</strong>, 45% YouTube.',viewsDay:'visualizações/dia',rpmLabel:'RPM:',views:'visualizações'},
+it:{pageDesc:'<strong>Quanto guadagnare su YouTube?</strong> Stima ricavi gratis.',estimatorTitle:'Stima Ricavi',estimatorDesc:'Regola visualizzazioni e nicchia.',lblNiche:'Nicchia',lblDailyViews:'Visualizz. Giornaliere',lblCustomViews:'O esatte',phCustomViews:'es. 50000',daily:'Giornaliero',monthly:'Mensile',yearly:'Annuale',rangeTitle:'Range Ricavi',dailyViews:'Visualizz. Giornaliere',monthlyViews:'Visualizz. Mensili',cpmEst:'CPM Stim.',disclaimer:'Disclaimer',disclaimerD:'Solo stime.',howWorksTitle:'Come Funziona',howWorks1:'YouTube tiene 45%, creator <strong>55%</strong>.',howWorks2:'<strong>Finanza</strong>: $8-$15 RPM.',nicheFinance:'Finanza (RPM $12)',nicheBusiness:'Business (RPM $10)',nicheEducation:'Educazione (RPM $8)',nicheHealth:'Salute (RPM $7)',nicheTech:'Tech (RPM $7)',nicheLifestyle:'Lifestyle (RPM $5)',nicheCooking:'Cucina (RPM $4)',nicheMusic:'Musica (RPM $3)',nicheGaming:'Gaming (RPM $2)',nicheComedy:'Comicità (RPM $2)',faq:'FAQ',fq1:'Quanto per 1.000?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=costo. <strong>RPM</strong>=ricavo.',fq3:'Per $1K/mese?',fa3:'A $5 RPM: <strong>200K/mese</strong>.',fq4:'Tutte contano?',fa4:'Solo <strong>monetizzate</strong>.',fq5:'Quota creator?',fa5:'<strong>55%</strong>, 45% YouTube.',viewsDay:'visualizz./giorno',rpmLabel:'RPM:',views:'visualizz.'},
+ru:{pageDesc:'<strong>Сколько заработать на YouTube?</strong> Бесплатный калькулятор.',estimatorTitle:'Оценщик Дохода',estimatorDesc:'Настройте просмотры и нишу.',lblNiche:'Ниша',lblDailyViews:'Дневные Просмотры',lblCustomViews:'Или точное число',phCustomViews:'напр. 50000',daily:'День',monthly:'Месяц',yearly:'Год',rangeTitle:'Диапазон Дохода',dailyViews:'Просмотры/день',monthlyViews:'Просмотры/месяц',cpmEst:'CPM Оценка',disclaimer:'Отказ',disclaimerD:'Только оценки.',howWorksTitle:'Как Работает',howWorks1:'YouTube берёт 45%, авторы <strong>55%</strong>.',howWorks2:'<strong>Финансы</strong>: $8-$15 RPM.',nicheFinance:'Финансы (RPM $12)',nicheBusiness:'Бизнес (RPM $10)',nicheEducation:'Образование (RPM $8)',nicheHealth:'Здоровье (RPM $7)',nicheTech:'Технологии (RPM $7)',nicheLifestyle:'Лайфстайл (RPM $5)',nicheCooking:'Кулинария (RPM $4)',nicheMusic:'Музыка (RPM $3)',nicheGaming:'Игры (RPM $2)',nicheComedy:'Комедия (RPM $2)',faq:'ЧаВо',fq1:'Сколько за 1.000?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=стоимость рекл. <strong>RPM</strong>=доход.',fq3:'Просмотров для $1K/мес?',fa3:'$5 RPM: <strong>200K/мес</strong>.',fq4:'Все считаются?',fa4:'Только <strong>монетизированные</strong>.',fq5:'Доля автора?',fa5:'<strong>55%</strong>, 45% YouTube.',viewsDay:'просм./день',rpmLabel:'RPM:',views:'просмотров'},
+ko:{pageDesc:'<strong>YouTube 수익?</strong> 무료 <strong>수익 계산기</strong>로 추정.',estimatorTitle:'수익 추정기',estimatorDesc:'조회수와 카테고리 조정.',lblNiche:'카테고리',lblDailyViews:'일일 조회수',lblCustomViews:'또는 정확한 조회수',phCustomViews:'예: 50000',daily:'일간',monthly:'월간',yearly:'연간',rangeTitle:'수익 범위',dailyViews:'일일 조회수',monthlyViews:'월간 조회수',cpmEst:'CPM 추정',disclaimer:'면책',disclaimerD:'추정치만.',howWorksTitle:'작동 원리',howWorks1:'YouTube 45%, 크리에이터 <strong>55%</strong>.',howWorks2:'<strong>금융</strong>: $8-$15 RPM.',nicheFinance:'금융 (RPM $12)',nicheBusiness:'비즈니스 (RPM $10)',nicheEducation:'교육 (RPM $8)',nicheHealth:'건강 (RPM $7)',nicheTech:'테크 (RPM $7)',nicheLifestyle:'라이프스타일 (RPM $5)',nicheCooking:'요리 (RPM $4)',nicheMusic:'음악 (RPM $3)',nicheGaming:'게임 (RPM $2)',nicheComedy:'코미디 (RPM $2)',faq:'자주 묻는 질문',fq1:'1,000 조회?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=광고주. <strong>RPM</strong>=수익.',fq3:'$1K/월?',fa3:'$5 RPM: <strong>월 20만</strong>.',fq4:'모든 조회?',fa4:'<strong>수익화 재생</strong>만.',fq5:'크리에이터 몫?',fa5:'<strong>55%</strong>, 45% YouTube.',viewsDay:'조회/일',rpmLabel:'RPM:',views:'조회'},
+ar:{pageDesc:'<strong>كم الربح من YouTube؟</strong> حاسبة مجانية.',estimatorTitle:'مُقدِّر العائدات',estimatorDesc:'اضبط المشاهدات والتخصص.',lblNiche:'التخصص',lblDailyViews:'المشاهدات اليومية',lblCustomViews:'أو الدقيق',phCustomViews:'مثال: 50000',daily:'يومي',monthly:'شهري',yearly:'سنوي',rangeTitle:'نطاق العائدات',dailyViews:'المشاهدات اليومية',monthlyViews:'المشاهدات الشهرية',cpmEst:'CPM',disclaimer:'إخلاء',disclaimerD:'تقديرات فقط.',howWorksTitle:'كيف تعمل',howWorks1:'YouTube 45%، المنشئون <strong>55%</strong>.',howWorks2:'<strong>المالية</strong>: $8-$15 RPM.',nicheFinance:'مالية (RPM $12)',nicheBusiness:'أعمال (RPM $10)',nicheEducation:'تعليم (RPM $8)',nicheHealth:'صحة (RPM $7)',nicheTech:'تقنية (RPM $7)',nicheLifestyle:'نمط حياة (RPM $5)',nicheCooking:'طبخ (RPM $4)',nicheMusic:'موسيقى (RPM $3)',nicheGaming:'ألعاب (RPM $2)',nicheComedy:'كوميديا (RPM $2)',faq:'أسئلة',fq1:'كم لكل 1,000؟',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM وCPM؟',fa2:'<strong>CPM</strong>=تكلفة. <strong>RPM</strong>=أرباح.',fq3:'$1K/شهر؟',fa3:'$5 RPM: <strong>200K/شهر</strong>.',fq4:'كل المشاهدات؟',fa4:'<strong>المُربحة</strong> فقط.',fq5:'حصة المنشئ؟',fa5:'<strong>55%</strong>، 45% YouTube.',viewsDay:'مشاهدات/يوم',rpmLabel:'RPM:',views:'مشاهدات'},
+hi:{pageDesc:'<strong>YouTube पर कितना?</strong> मुफ्त कैलकुलेटर।',estimatorTitle:'राजस्व अनुमानक',estimatorDesc:'व्यू और नीच चुनें।',lblNiche:'चैनल नीच',lblDailyViews:'दैनिक व्यू',lblCustomViews:'या सटीक व्यू',phCustomViews:'जैसे 50000',daily:'दैनिक',monthly:'मासिक',yearly:'वार्षिक',rangeTitle:'राजस्व रेंज',dailyViews:'दैनिक व्यू',monthlyViews:'मासिक व्यू',cpmEst:'CPM अनुमान',disclaimer:'अस्वीकरण',disclaimerD:'केवल अनुमान।',howWorksTitle:'कैसे काम करता है',howWorks1:'YouTube 45%, क्रिएटर्स <strong>55%</strong>।',howWorks2:'<strong>फाइनेंस</strong>: $8-$15 RPM।',nicheFinance:'फाइनेंस (RPM $12)',nicheBusiness:'बिजनेस (RPM $10)',nicheEducation:'शिक्षा (RPM $8)',nicheHealth:'स्वास्थ्य (RPM $7)',nicheTech:'टेक (RPM $7)',nicheLifestyle:'जीवनशैली (RPM $5)',nicheCooking:'कुकिंग (RPM $4)',nicheMusic:'संगीत (RPM $3)',nicheGaming:'गेमिंग (RPM $2)',nicheComedy:'कॉमेडी (RPM $2)',faq:'सामान्य प्रश्न',fq1:'1,000 व्यू पर?',fa1:'<strong>$2-$12 RPM</strong>।',fq2:'RPM बनाम CPM?',fa2:'<strong>CPM</strong>=लागत। <strong>RPM</strong>=कमाई।',fq3:'$1K/महीना?',fa3:'$5 RPM: <strong>200K/महीना</strong>।',fq4:'सभी गिनते?',fa4:'केवल <strong>मॉनेटाइज्ड</strong>।',fq5:'क्रिएटर हिस्सा?',fa5:'<strong>55%</strong>, 45% YouTube।',viewsDay:'व्यू/दिन',rpmLabel:'RPM:',views:'व्यू'},
+th:{pageDesc:'<strong>ทำเงิน YouTube?</strong> เครื่องคำนวณฟรี',estimatorTitle:'เครื่องประเมินรายได้',estimatorDesc:'ปรับยอดชมและหมวด',lblNiche:'หมวดช่อง',lblDailyViews:'ยอดชมรายวัน',lblCustomViews:'หรือยอดชมที่แน่นอน',phCustomViews:'เช่น 50000',daily:'รายวัน',monthly:'รายเดือน',yearly:'รายปี',rangeTitle:'ช่วงรายได้',dailyViews:'ยอดชมรายวัน',monthlyViews:'ยอดชมรายเดือน',cpmEst:'CPM',disclaimer:'ข้อจำกัด',disclaimerD:'ประมาณเท่านั้น',howWorksTitle:'ทำงานอย่างไร',howWorks1:'YouTube 45% ครีเอเตอร์ <strong>55%</strong>',howWorks2:'<strong>การเงิน</strong>: $8-$15 RPM',nicheFinance:'การเงิน (RPM $12)',nicheBusiness:'ธุรกิจ (RPM $10)',nicheEducation:'การศึกษา (RPM $8)',nicheHealth:'สุขภาพ (RPM $7)',nicheTech:'เทคโนโลยี (RPM $7)',nicheLifestyle:'ไลฟ์สไตล์ (RPM $5)',nicheCooking:'ทำอาหาร (RPM $4)',nicheMusic:'ดนตรี (RPM $3)',nicheGaming:'เกม (RPM $2)',nicheComedy:'ตลก (RPM $2)',faq:'คำถาม',fq1:'1,000 ยอดชม?',fa1:'<strong>$2-$12 RPM</strong>',fq2:'RPM กับ CPM?',fa2:'<strong>CPM</strong>=ผู้ลงโฆษณา <strong>RPM</strong>=รายได้',fq3:'$1K/เดือน?',fa3:'$5 RPM: <strong>200K/เดือน</strong>',fq4:'ทุกยอดชมนับ?',fa4:'เฉพาะ<strong>สร้างรายได้</strong>',fq5:'ส่วนครีเอเตอร์?',fa5:'<strong>55%</strong> 45% YouTube',viewsDay:'ยอดชม/วัน',rpmLabel:'RPM:',views:'ยอดชม'},
+tr:{pageDesc:'<strong>YouTube\'da kazanç?</strong> Ücretsiz hesaplayıcı.',estimatorTitle:'Gelir Tahmincisi',estimatorDesc:'Görüntülemeleri ve nişi ayarla.',lblNiche:'Niş',lblDailyViews:'Günlük Görüntüleme',lblCustomViews:'Veya kesin sayı',phCustomViews:'örn. 50000',daily:'Günlük',monthly:'Aylık',yearly:'Yıllık',rangeTitle:'Gelir Aralığı',dailyViews:'Günlük Görüntüleme',monthlyViews:'Aylık Görüntüleme',cpmEst:'CPM Tahmin',disclaimer:'Sorumluluk',disclaimerD:'Sadece tahmin.',howWorksTitle:'Nasıl Çalışır',howWorks1:'YouTube %45, üreticiler <strong>%55</strong>.',howWorks2:'<strong>Finans</strong>: $8-$15 RPM.',nicheFinance:'Finans (RPM $12)',nicheBusiness:'İş (RPM $10)',nicheEducation:'Eğitim (RPM $8)',nicheHealth:'Sağlık (RPM $7)',nicheTech:'Teknoloji (RPM $7)',nicheLifestyle:'Yaşam Tarzı (RPM $5)',nicheCooking:'Yemek (RPM $4)',nicheMusic:'Müzik (RPM $3)',nicheGaming:'Oyun (RPM $2)',nicheComedy:'Komedi (RPM $2)',faq:'SSS',fq1:'1.000 görüntüleme?',fa1:'<strong>$2-$12 RPM</strong>.',fq2:'RPM vs CPM?',fa2:'<strong>CPM</strong>=maliyet. <strong>RPM</strong>=kazanç.',fq3:'$1K/ay?',fa3:'$5 RPM: <strong>200K/ay</strong>.',fq4:'Hepsi sayılır mı?',fa4:'Sadece <strong>monetize</strong>.',fq5:'Üretici payı?',fa5:'<strong>%55</strong>, %45 YouTube.',viewsDay:'görüntüleme/gün',rpmLabel:'RPM:',views:'görüntüleme'}
+  };
+  var meta={en:{title:'YouTube Money Calculator - Estimate Ad Revenue',desc:'Free YouTube revenue calculator.'},es:{title:'Calculadora de Dinero YouTube',desc:'Calculadora gratuita de ingresos YouTube.'},de:{title:'YouTube Geld Rechner',desc:'Kostenloser YouTube-Einnahmen-Rechner.'},fr:{title:'Calculatrice d\'Argent YouTube',desc:'Calculatrice gratuite des revenus YouTube.'},ja:{title:'YouTube収益計算機',desc:'無料のYouTube収益計算ツール。'},zh:{title:'YouTube收益计算器',desc:'免费的YouTube广告收入计算器。'},pt:{title:'Calculadora de Dinheiro YouTube',desc:'Calculadora gratuita de receita YouTube.'},it:{title:'Calcolatore Soldi YouTube',desc:'Calcolatore gratuito di ricavi YouTube.'},ru:{title:'Калькулятор Денег YouTube',desc:'Бесплатный калькулятор дохода YouTube.'},ko:{title:'YouTube 수익 계산기',desc:'무료 YouTube 광고 수익 계산기.'},ar:{title:'حاسبة أموال YouTube',desc:'حاسبة مجانية لعائدات YouTube.'},hi:{title:'YouTube मनी कैलकुलेटर',desc:'मुफ्त YouTube राजस्व कैलकुलेटर।'},th:{title:'เครื่องคำนวณเงิน YouTube',desc:'เครื่องคำนวณรายได้ YouTube ฟรี'},tr:{title:'YouTube Para Hesaplayıcı',desc:'Ücretsiz YouTube gelir hesaplayıcı.'}};
+  var sel=document.createElement('select');sel.id='langSwitcher';
+  Object.keys(LANGS).forEach(function(code){var opt=document.createElement('option');opt.value=code;opt.textContent=LANGS[code];sel.appendChild(opt);});
+  sel.style.cssText='position:fixed;top:12px;right:12px;z-index:9999;padding:6px 28px 6px 10px;border:1px solid #d1d5db;border-radius:8px;background:white url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'12\' height=\'12\' viewBox=\'0 0 12 12\'%3E%3Cpath d=\'M3 5l3 3 3-3\' fill=\'none\' stroke=\'%23666\' stroke-width=\'1.5\'/%3E%3C/svg%3E") no-repeat right 8px center;background-size:12px;font-size:13px;color:#374151;cursor:pointer;outline:none;appearance:none;-webkit-appearance:none;box-shadow:0 1px 3px rgba(0,0,0,0.08)';
+  document.body.prepend(sel);
+  window._t=function(key){var lang=localStorage.getItem('siteLang')||detectLang();return(translations[lang]&&translations[lang][key])||translations.en[key]||key;};
+  function detectLang(){var saved=localStorage.getItem('siteLang');if(saved&&translations[saved])return saved;var nav=(navigator.language||navigator.userLanguage||'en').toLowerCase();var base=nav.split('-')[0];if(translations[base])return base;return'en';}
+  function applyI18n(lang){if(!translations[lang])lang='en';localStorage.setItem('siteLang',lang);sel.value=lang;document.querySelectorAll('[data-i18n]').forEach(function(el){var key=el.getAttribute('data-i18n');if(translations[lang][key]!==undefined)el.innerHTML=translations[lang][key];});document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){var key=el.getAttribute('data-i18n-placeholder');if(translations[lang][key]!==undefined)el.placeholder=translations[lang][key];});if(meta[lang]){document.title=meta[lang].title;var dm=document.querySelector('meta[name="description"]');if(dm)dm.content=meta[lang].desc;}document.documentElement.lang=lang;}
+  sel.addEventListener('change',function(){applyI18n(this.value);if(typeof calculate==='function')calculate();});
+  applyI18n(detectLang());
+  })();
   </script>
 </Layout>
