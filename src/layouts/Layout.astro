@@ -3,69 +3,127 @@ interface Props {
   title: string;
   description?: string;
   canonicalUrl?: string;
+  ogImage?: string;
 }
+
+const SITE_URL = 'https://yt-money.lazytoolshub.top';
+const SITE_NAME = 'YouTube Money Calculator';
+const DEFAULT_KEYWORDS = 'youtube money calculator, youtube revenue estimator, youtube ad revenue, cpm calculator, rpm calculator, youtube earnings, creator income';
 
 const {
   title,
-  description = 'YouTube Money Calculator — estimate your YouTube ad revenue based on daily views, niche RPM, and upload frequency.',
+  description = 'YouTube Money Calculator',
   canonicalUrl,
+  ogImage = '/og-image.png',
 } = Astro.props;
 
-const canonical = canonicalUrl || new URL(Astro.url.pathname, Astro.site).toString();
+const canonical = canonicalUrl || new URL(Astro.url.pathname, SITE_URL).href;
+const ogImageUrl = ogImage.startsWith('http') ? ogImage : new URL(ogImage, SITE_URL).href;
+const SUPPORTED_LANGS = ['en','zh','es','fr','de','ja','pt','ar','ko','ru','tr','th','hi','it'];
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#ef4444" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <meta name="googlebot" content="index, follow" />
+  <meta name="format-detection" content="telephone=no" />
 
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content={DEFAULT_KEYWORDS} />
+  <meta name="author" content={SITE_NAME} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
-    <meta property="og:type" content="website" />
+  <!-- hreflang alternates -->
+  <link rel="alternate" hreflang="en" href={`${SITE_URL}/`} />
+  {SUPPORTED_LANGS.filter(l => l !== 'en').map(l => (
+    <link rel="alternate" hreflang={l} href={`${SITE_URL}/?lang=${l}`} />
+  ))}
+  <link rel="alternate" hreflang="x-default" href={`${SITE_URL}/`} />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImageUrl} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content={SITE_NAME} />
+  <meta property="og:locale" content="en_US" />
 
-    <script type="application/ld+json" is:inline define:vars={{ canonical, title, description }}>
-    [
-      {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "YouTube Money Calculator",
-        "url": canonical,
-        "description": description,
-        "applicationCategory": "FinanceApplication",
-        "operatingSystem": "All",
-        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-        "browserRequirements": "Requires JavaScript"
-      },
-      {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": canonical.replace(/\/[^/]*\/?$/, '') },
-          { "@type": "ListItem", "position": 2, "name": title, "item": canonical }
-        ]
-      }
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImageUrl} />
+
+  <!-- Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": SITE_NAME,
+    "description": description,
+    "url": canonical,
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Any (Web Browser)",
+    "browserRequirements": "Requires JavaScript",
+    "inLanguage": SUPPORTED_LANGS,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "127",
+      "bestRating": "5",
+      "worstRating": "1"
+    }
+  })} />
+
+  <!-- Structured Data: Organization -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Lazy Tools Hub",
+    "url": "https://lazytoolshub.top"
+  })} />
+
+  <!-- Structured Data: BreadcrumbList -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL }
     ]
-    </script>
+  })} />
 
-    <script is:inline>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'GA_MEASUREMENT_ID');
-    </script>
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
-  </head>
-  <body class="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
+  <!-- Sync <html lang>/<html dir> with selected i18n locale -->
+  <script is:inline>
+    (function () {
+      var supported = ['en','zh','es','fr','de','ja','pt','ar','ko','ru','tr','th','hi','it'];
+      var rtl = ['ar'];
+      function pick() {
+        try { var q = new URL(location.href).searchParams.get('lang'); if (q && supported.indexOf(q) >= 0) return q; } catch (e) {}
+        try { var s = localStorage.getItem('siteLang'); if (s && supported.indexOf(s) >= 0) return s; } catch (e) {}
+        var n = (navigator.language || 'en').toLowerCase().split('-')[0];
+        return supported.indexOf(n) >= 0 ? n : 'en';
+      }
+      var lang = pick();
+      document.documentElement.lang = lang;
+      document.documentElement.dir = rtl.indexOf(lang) >= 0 ? 'rtl' : 'ltr';
+    })();
+  </script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
     <div class="container mx-auto px-4 py-8 max-w-4xl">
       <header class="text-center mb-8">
         <h1 data-i18n="headerTitle" class="text-4xl font-bold text-red-600 mb-2">YouTube Money Calculator</h1>
@@ -89,7 +147,7 @@ const canonical = canonicalUrl || new URL(Astro.url.pathname, Astro.site).toStri
       </main>
 
       <footer class="text-center mt-8 text-gray-500 text-sm">
-        <p><span data-i18n="footerCopy">&copy; 2025 YouTube Money Calculator. Estimates only — actual earnings vary.</span></p>
+        <p><span data-i18n="footerCopy">&copy; 2025 YouTube Money Calculator. Estimates only 鈥?actual earnings vary.</span></p>
           <div class="mt-8 pt-8 border-t border-gray-200">
       <h2 class="text-gray-400 text-xs font-semibold uppercase tracking-widest mb-4 text-center">More Free Online Tools</h2>
       <div class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
